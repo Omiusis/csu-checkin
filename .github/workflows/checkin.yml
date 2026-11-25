@@ -12,7 +12,7 @@ permissions:
 jobs:
   checkin:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 60
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
@@ -48,8 +48,8 @@ jobs:
       - name: 随机选择执行时间
         if: github.event_name == 'schedule'
         run: |
-          # 20:13 北京时间对应 12:13 UTC；随机等待 0—105 分钟，最晚约 22:12 执行。
-          WAIT_SECONDS=$(shuf -i 0-6000 -n 1)
+          # 20:13 北京时间对应 12:13 UTC；随机等待 0—5 分钟，最晚约 20:18 执行。
+          WAIT_SECONDS=$(shuf -i 0-600 -n 1)
           echo "随机等待 ${WAIT_SECONDS} 秒后执行（北京时间 20:13—22:30 内）"
           echo "随机等待：$((WAIT_SECONDS / 60)) 分钟 $((WAIT_SECONDS % 60)) 秒" >> "$GITHUB_STEP_SUMMARY"
           sleep "$WAIT_SECONDS"
